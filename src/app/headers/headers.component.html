@@ -1,0 +1,18 @@
+<div class="container">
+    <nav class="nav">
+        <h1 class="header" routerLink="/"><i class="fa fa-superpowers"></i>HS</h1>
+
+        <div class="nav-search" *ngIf="menuType!=='seller'">
+
+        </div>
+
+        <div [ngSwitch]="menuType" class="list">
+            <ul *ngSwitchCase="'default'">
+                <li routerLink="/">Inicio</li>
+                <li routerLink="/cart">Cart [{{getNumberItems()}}]</li>
+                <li routerLink="/seller-signup">Iniciar Sesion</li>
+                <li (click)="logout()">Cerrar sesion</li>
+            </ul>
+        </div>
+    </nav>
+</div>

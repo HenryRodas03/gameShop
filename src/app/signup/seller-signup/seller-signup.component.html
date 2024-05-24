@@ -1,0 +1,35 @@
+<div class="top-container">
+	<div class="main">
+		<input type="checkbox" id="chk" aria-hidden="true">
+		<div class="signup">
+			<form [formGroup]="registerForm" (ngSubmit)="register()">
+				<label for="chk" aria-hidden="true" style="margin: 14px;">Registro</label>
+
+				<input type="text" name="cedula" placeholder="Cedula" formControlName="cedula">
+
+				<input type="text" name="nombre" placeholder="Nombre" formControlName="nombre">
+
+				<input type="text" name="apellidos" placeholder="Apellidos" formControlName="apellidos">
+
+				<input type="email" name="email" placeholder="Email" formControlName="email">
+
+				<input type="text" name="numero_celular" placeholder="Celular" formControlName="numero_celular">
+
+				<input type="text" name="direccion" placeholder="direccion" formControlName="direccion">
+
+				<button [disabled]="registerFormControlls.invalid">Registrarse</button>
+				<small class="signup-msg">{{signupMsg}}</small>
+			</form>
+		</div>
+
+		<div class="login">
+			<form [formGroup]="loginForm" (ngSubmit)="login()">
+				<label for="chk" aria-hidden="true">Iniciar sesion</label>
+				<input type="email" name="usuario" placeholder="Usuario" formControlName="usuario">
+				<input type="password" name="contraseña" placeholder="contraseña" formControlName="contraseña">
+				<button>Iniciar</button>
+				<small class="login-msg">{{signupMsg}}</small>
+			</form>
+		</div>
+	</div>
+</div>
