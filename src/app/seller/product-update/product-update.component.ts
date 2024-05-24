@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/dataTypes';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 
@@ -12,44 +12,30 @@ import { ProductsService } from '../../services/products.service';
 export class ProductUpdateComponent implements OnInit{
 
   public productMsg: string | undefined
-  public productId: string | undefined
-  public product: Product | undefined
+  public productId: any;
+  public product: any;
 
   constructor(private fb: FormBuilder, private productService: ProductsService, private router: Router, 
-    private activatedRoute: ActivatedRoute){}
+    private route: ActivatedRoute){}
 
   productUpdateForm = this.fb.group({
-    title: [''],
-    price: [0],
-    color: [''],
-    categories: [''],
-    desc: [''],
-    image: [''],
-    size: ['']
+    id: ['', [Validators.required]],
+    nombre: ['', [Validators.required]],
+    tipo_producto: ['', [Validators.required]],
+    precio: ['', [Validators.required]],
+    cantidad_disponible: ['', [Validators.required]],
+    img: ['', [Validators.required]]
   })
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params)=>{
-      this.productId = params?.['_id']
-      this.productId && this.productService.getProduct(this.productId).subscribe((res)=>{
-        
-        if(res){
-          this.productUpdateForm = this.fb.group({
-            title: [res.title],
-            price: [res.price],
-            color: [res.color],
-            categories: [res.categories],
-            desc: [res.desc],
-            image: [res.image],
-            size: [res.size]
-          })
-        }
-      })
-    })
+    this.route.params.subscribe(params => {
+      this.product = JSON.parse(decodeURIComponent(params['data']));
+    });
+    this.productUpdateForm.reset({ id:this.product.id_producto, nombre: this.product.nombre, tipo_producto:this.product.tipo_producto,precio:this.product.precio, cantidad_disponible: this.product.cantidad_disponible,img: this.product.img });
   }
 
   updateProduct(){
-    let productData = this.productUpdateForm.value as Product
+    /* let productData = this.productUpdateForm.value as Product
     if(this.productId){
       productData._id = this.productId
     }  
@@ -63,7 +49,7 @@ export class ProductUpdateComponent implements OnInit{
         this.productMsg = err.statusText
       }
       this.getTimeout('err')
-    })
+    }) */
   }
 
   getTimeout(val: string){

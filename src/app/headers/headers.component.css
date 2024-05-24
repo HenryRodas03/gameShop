@@ -1,10 +1,10 @@
 /* background-color: #573b8a;*/
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-.container{
+.container {
     padding: 10px 0 10px 100px;
     /* background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);  */
     background-color: #573b8a;
@@ -16,31 +16,31 @@
     border-bottom: 4px solid red;
 }
 
-.nav-search{
+.nav-search {
     float: left;
     margin-top: 15px;
     padding-left: 60px;
 }
 
-.nav-search input{
+.nav-search input {
     height: 34px;
     width: 500px;
     padding-left: 1rem;
 }
 
-.nav-search button{
+.nav-search button {
     height: 37px;
     width: 70px;
     cursor: pointer;
 }
 
 
-.list{
-    padding-left: 70%;
+.list {
+    padding-left: 60%;
     padding-bottom: 20px;
 }
 
-.list ul li{
+.list ul li {
     float: left;
     list-style: none;
     padding-left: 5%;
@@ -49,21 +49,21 @@
     cursor: pointer;
 }
 
-.container h1{
+.container h1 {
     padding-top: 20px;
     float: left;
 }
 
-.dropdown-content{
+.dropdown-content {
     padding-top: 25px;
     margin-left: 10px;
 }
 
-.header{
+.header {
     cursor: pointer;
 }
 
-.suggested-result{
+.suggested-result {
     position: absolute;
     top: 65px;
     z-index: 10;
@@ -73,12 +73,11 @@
     list-style: none;
     color: #573b8a;
     padding-left: 19px;
-    
+
 }
 
-.suggested-result li{
+.suggested-result li {
     border-bottom: solid 1px grey;
     padding: 10px 0 10px 0;
     cursor: pointer;
 }
-

@@ -1,83 +1,37 @@
-<h1>Update Product</h1>
+<h1>Actualizar producto</h1>
 
-<!-- Create Form -->
 <form id="form" [formGroup]="productUpdateForm" (ngSubmit)="updateProduct()">
-  <!-- Details -->
   <div class="form-control">
-    <label>Name</label>
-    <input
-      formControlName="title"
-      type="text"
-      name="title"
-      placeholder="Enter Product Name"
-    />
+    <label>Nombre</label>
+    <input formControlName="nombre" type="text" name="nombre" placeholder="Ingrese el nombre" />
   </div>
 
   <div class="form-control">
-    <label>Color</label>
-    <input
-      formControlName="color"
-      type="text"
-      name="color"
-      placeholder="Enter Product Color"
-    />
+    <label>Tipo de producto</label>
+    <input formControlName="tipo_producto" type="text" name="tipo_producto" placeholder="Ingrese el tipo" />
   </div>
 
   <div class="form-control">
-    <label>Price</label>
-    <input
-      formControlName="price"
-      type="text"
-      name="price"
-      placeholder="Enter Product Price"
-    />
+    <label>Precio</label>
+    <input formControlName="precio" type="text" name="precio" placeholder="Ingrese el precio" />
   </div>
 
   <div class="form-control">
-    <label>Category</label>
-    <input
-      formControlName="categories"
-      type="text"
-      name="categories"
-      placeholder="Enter Product Category"
-    />
+    <label>Cantidad:</label>
+    <input formControlName="cantidad_disponible" type="number" min="1" max="500">
   </div>
 
   <div class="form-control">
-    <label>Size</label>
-    <input
-      formControlName="size"
-      type="text"
-      name="size"
-      placeholder="Enter Product Size"
-    />
+    <label>Imagen URL</label>
+    <input formControlName="img" type="text" name="img" placeholder="Ingrese la direccion de la imagen"
+      #cantidadInput />
   </div>
 
-  <div class="form-control">
-    <label>Image URL</label>
-    <input
-      formControlName="image"
-      type="text"
-      name="image"
-      placeholder="Enter Image Url"
-    />
-  </div>
-
-  <div class="form-control">
-    <label for="comment">Description</label>
-    <textarea
-      formControlName="desc"
-      name="text"
-      id=""
-      cols="30"
-      rows="8"
-      name="desc"
-      placeholder="Enter Product Description"
-    ></textarea>
+  <div>
+    <img [src]="cantidadInput.value" style="width: 100%;">
   </div>
 
   <p class="err-msg">{{ productMsg }}</p>
 
-  <button class="form-button">Submit</button>
+  <button class="form-button">actualizar</button>
 </form>
-

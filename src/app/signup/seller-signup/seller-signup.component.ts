@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SellerSignupService } from '../../services/seller-signup.service';
 import { Router } from '@angular/router';
-import { Signup } from '../../models/dataTypes';
 
 @Component({
   selector: 'app-seller-signup',
@@ -15,46 +14,75 @@ export class SellerSignupComponent implements OnInit{
 
   constructor(private fb: FormBuilder, private signupService: SellerSignupService, private router: Router){}
 
-  signupForm = this.fb.group({
-    username: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]]
+  loginForm = this.fb.group({
+    usuario: ['', [Validators.required, Validators.email]],
+    contraseña: ['', [Validators.required]]
   })
 
-  loginForm = this.fb.group({
+  registerForm = this.fb.group({
+    cedula: ['', [Validators.required]],
+    nombre: ['', [Validators.required]],
+    apellidos: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]]
+    numero_celular: ['', [Validators.required]],
+    direccion: ['', [Validators.required]],
   })
 
   ngOnInit(): void {
-    this.signupService.reloadSeller()
   }
-  
-  onSignup(){
-    let userData = this.signupForm.value as Signup
-    this.signupService.signupUser(userData).subscribe((res)=>{
-      // console.log(res);
-      if(res){
-        this.signupMsg = `You Have Successfully Signed Up, Please Login`
-        this.signupForm.reset()
+
+  login(){
+    let userData = this.loginForm.value
+    this.signupService.loginUser(userData).subscribe({
+      next: (data:any) => {
+
+        if (data.status) {
+          localStorage.setItem("id",data.data.id);
+          localStorage.setItem("rol",data.data.rol);
+          this.loginForm.reset();
+          alert("Bienvenido "+ userData.usuario );
+          this.router.navigate(['/']);
+        }else{
+          alert("Error inesperado, comuniquese con un asesor o intentelo de nuevo mas tarde")
+        }
+        
+        if (!data.status && data.message == "Credenciales invalidas") {
+          this.signupMsg = data.message;
+          alert(data.message);
+        }
+        
+      },
+      error: (err:any) => {
+        alert("Error inesperado, comuniquese con un asesor o intentelo de nuevo mas tarde")
+        console.log("request error:");
+        console.log(err);
       }
-    }, (err)=>{
-      // console.warn(err.error.message);
-      this.signupMsg = err.error.msg
-      this.signupForm.reset()
     })
     
   }
 
-  onLogin(){
-    let userData = this.loginForm.value as Signup
-    this.signupService.loginUser(userData)
-    this.signupService.signupMsg.subscribe((res)=>{
-      if(res){
-        // console.log(res);
-        this.signupMsg = "Please Enter Valid Credentails"
-        this.loginForm.reset()
+  register(){
+    let userData = this.registerForm.value
+    this.signupService.register(userData).subscribe({
+      next: (data:any) => {
+        if (data) {
+          alert("Usuario creado con exito, revise su correo para obtener sus credenciales");
+          this.registerForm.reset();
+        }
+
+      },
+      error: (err:any) => {
+        console.log("request error:");
+        console.log(err);
       }
     })
+  }
+
+  public get loginFormControlls(): any{
+    return this.loginForm.controls;
+  }
+
+  public get registerFormControlls(): any{
+    return this.registerForm.controls;
   }
 }

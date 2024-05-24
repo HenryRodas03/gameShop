@@ -20,15 +20,20 @@ export class ProductsComponent implements OnInit{
   }
 
   getAllProducts(){
-    this.productService.getProducts().subscribe((res)=>{
-      if(res){
-        this.allProducts = res
+    this.productService.getProducts().subscribe({
+      next: (data:any) => {
+        console.log("🚀 ~ ProductsComponent ~ this.productService.getProducts ~ data:", data)
+        
+      },
+      error: (err:any) => {
+        console.log("request error:");
+        console.log(err);
       }
     })
   }
 
   onDelete(productId: string | undefined){
-    productId && this.productService.deleteProduct(productId).subscribe((res)=>{
+   /*  productId && this.productService.deleteProduct(productId).subscribe((res)=>{
       if(res){
         this.getAllProducts()
         this.deleteMsg = 'Products Has Been Deleted'
@@ -39,7 +44,7 @@ export class ProductsComponent implements OnInit{
         this.deleteMsg = err.statusText
       }
       this.getTimeout()
-    })
+    }) */
   }
 
   getTimeout(){

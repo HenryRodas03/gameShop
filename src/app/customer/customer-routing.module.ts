@@ -13,9 +13,9 @@ const routes: Routes = [
     {path: '', component: ShopComponent},
     {path: 'product-details/:_id', component: ProductDetailsComponent},
     {path: 'search/:params', component: SearchComponent},
-    {path: 'cart', component: CartComponent, canActivate: [customerAuthGuard]},
-    {path: 'checkout', component: CheckoutComponent, canActivate: [customerAuthGuard]},
-    {path: 'orders', component: OrderComponent, canActivate: [customerAuthGuard]}
+    {path: 'cart', component: CartComponent},
+    {path: 'checkout', component: CheckoutComponent},
+    {path: 'orders', component: OrderComponent}
   ]}
 ];
 

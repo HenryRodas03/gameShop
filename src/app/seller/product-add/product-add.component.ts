@@ -26,7 +26,7 @@ export class ProductAddComponent {
   })
 
   onSubmit(){
-    let productData = this.productForm!.value as Product
+   /*  let productData = this.productForm!.value as Product
     this.productService.createProduct(productData).subscribe((res)=>{
       // console.log('rf', res);
       if(res && res._id){
@@ -39,7 +39,7 @@ export class ProductAddComponent {
         this.productMsg = 'Please Add Unique Name Or Add A Valid Price'
       }
       this.getTimeout()
-    })
+    }) */
   }
 
   getTimeout(){

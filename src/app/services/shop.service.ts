@@ -9,7 +9,7 @@ import { catchError, throwError } from 'rxjs';
 export class ShopService {
 
   public replaceUrl = 'http://localhost:5000/'
-  public url = 'https://e-commerce-backend-f8v8.onrender.com/'
+  public url = 'http://localhost:8080/api/productos'
 
   public cartDataLength = new EventEmitter<Product[] | []>()
 
@@ -27,10 +27,14 @@ export class ShopService {
     return httpHeaders
 
   }
-
+  
   errorHandler(error: HttpErrorResponse){
     console.log(error);  
     return throwError(error)
+  }
+  
+  getProducts(){
+    return this.http.get(`${this.url}`);
   }
 
   trendyProducts(){

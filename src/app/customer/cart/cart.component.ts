@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Cart, PriceSummary } from '../../models/dataTypes';
 import { Router } from '@angular/router';
 import { ShopService } from '../../services/shop.service';
+import { CartItemsService } from '../../services/cart-items.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,50 +11,31 @@ import { ShopService } from '../../services/shop.service';
 })
 export class CartComponent implements OnInit{
 
-  public cart: Cart[] | undefined
+  public cart: any[] = []
 
-  public priceSummary: PriceSummary = {
-    price: 0,
-    discount: 0,
-    tax: 0,
-    delivery: 0,
-    total: 0
-  }
+  public total:any;
+  private cartItemService = inject( CartItemsService);
 
   constructor(private router: Router, private shopService: ShopService){}
 
   ngOnInit(): void {
-    this.loadCardDetails()
+    this.loadCardDetails();
+    this.calculateTotal();
   }
 
   loadCardDetails(){
-    this.shopService.getCart().subscribe((res)=>{
-      this.cart = res.cart.products
-      // console.log(this.cart);
-      let price = 0
-      res.cart.products.forEach((item: any)=>{
-        if(item.quantity && item.price){
-          price+= +item.price * +item.quantity 
-        }
-      })
-      this.priceSummary.price = price
-      this.priceSummary.tax = price/10
-      this.priceSummary.delivery = 100
-      this.priceSummary.total = price + price/10 + 100
-      // console.log(this.priceSummary.total);
-      if(!this.cart?.length){
-        this.router.navigate(['/'])
-      }else{
-        this.shopService.getCartCount()
-      }
-    })
+    return this.cart = this.cartItemService.getCartItems();
   }
 
-  removeFromCart(productId: string){
-    this.shopService.removeItemFromCart(productId).subscribe((res)=>{
-      this.loadCardDetails() 
-    })
+  removeFromCart(productId: number) {
+    this.cart = this.cart.filter(item => item.product.id_producto !== productId);
     
+    this.cartItemService.setCartItems(this.cart);
+    this.calculateTotal();
+  }
+
+  calculateTotal() {
+    return this.total = this.cart.reduce((acc, item) => acc + (item.product.precio * item.cantidad), 0);
   }
 
   checkoutOrder(){
